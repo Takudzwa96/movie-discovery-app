@@ -2,6 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>imageBaseURL</key>
+	<string>https://image.tmdb.org/t/p/w500</string>
+	<key>baseURL</key>
+	<string>https://api.themoviedb.org/3</string>
+	<key>API_KEY</key>
+	<string>16eb3c9d355f6fd7da94a0cd2faf00d2</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Would like to use your Face ID for logging in</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
