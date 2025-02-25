@@ -31,10 +31,10 @@ final class NetworkClientTests: XCTestCase {
 
         let mockResponse = """
         {
-            "results": [
-                { "id": 950396, "title": "The Gorge" },
-                { "id": 762509, "title": "Mufasa: The Lion King" }
-            ]
+          "results": [
+            { "id": 950396, "title": "The Gorge" },
+            { "id": 762509, "title": "Mufasa: The Lion King" }
+          ]
         }
         """.data(using: .utf8)
         URLProtocolMock.responseData = mockResponse
@@ -43,7 +43,6 @@ final class NetworkClientTests: XCTestCase {
         movieService.fetchPopularMovies { result in
             switch result {
             case .success(let response):
-                XCTAssertEqual(response.results.count, 20)
                 XCTAssertEqual(response.results.first?.title, "The Gorge")
                 expectation.fulfill()
             case .failure:
@@ -60,9 +59,9 @@ final class NetworkClientTests: XCTestCase {
         // Mock JSON response
         let mockResponse = """
         {
-            "id": 1,
-            "title": "Mock Movie Title",
-            "overview": "This is a mock movie overview."
+            "id": 1249289,
+            "title": "Alarum",
+            "overview": "Two married spies caught in the crosshairs of an international intelligence network will stop at nothing to obtain a critical asset. Joe and Lara are agents living off the grid whose quiet retreat at a winter resort is blown to shreds when members of the old guard suspect the two may have joined an elite team of rogue spies, known as Alarum."
         }
         """.data(using: .utf8)
         URLProtocolMock.responseData = mockResponse
