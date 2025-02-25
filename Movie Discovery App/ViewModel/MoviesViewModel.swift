@@ -26,17 +26,35 @@ class MoviesViewModel: ObservableObject {
 
     // MARK: - Fetch Movies
 
-    /// Fetches movies 
-    func fetchpopularMovies() {
+    /// Fetches movies
+    func fetchPopularMovies() {
         isLoading = true
+        errorMessage = nil
+
         movieService.fetchPopularMovies { [weak self] result in
             DispatchQueue.main.async {
-                self?.isLoading = false
+                guard let self = self else { return }
+                self.isLoading = false
                 switch result {
                 case .success(let movies):
-                    self?.movies = movies.results.sorted { $0.title < $1.title }
+                    if movies.results.isEmpty {
+                        self.errorMessage = "No movies available at the moment."
+                    } else {
+                        self.movies = movies.results.sorted { $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending }
+                    }
                 case .failure(let error):
-                    self?.errorMessage = error.localizedDescription
+                    if let afError = error.asAFError {
+                        switch afError.responseCode {
+                        case 401:
+                            self.errorMessage = "Unauthorized access. Please log in again."
+                        case 404:
+                            self.errorMessage = "Movies not found. Please try again later."
+                        default:
+                            self.errorMessage = "An unexpected error occurred. Please try again."
+                        }
+                    } else {
+                        self.errorMessage = "Failed to load movies. Please check your internet connection."
+                    }
                 }
             }
         }

@@ -18,6 +18,27 @@ struct MoviesView: View {
 
                 if viewModel.isLoading {
                     LoadingSpinner()
+                } else if let errorMessage = viewModel.errorMessage {
+                    VStack {
+                        Image(systemName: "exclamationmark.triangle.fill")
+                            .resizable()
+                            .frame(width: 80, height: 80)
+                            .foregroundColor(.red)
+                        Text(errorMessage)
+                            .foregroundColor(.red)
+                            .padding()
+                        Button(action: {
+                            viewModel.fetchPopularMovies()
+                        }) {
+                            Text("Retry")
+                                .fontWeight(.bold)
+                                .padding()
+                                .background(Color.blue)
+                                .foregroundColor(.white)
+                                .cornerRadius(8)
+                        }
+                    }
+                    .padding()
                 } else {
                     List(viewModel.searchedMovies) { movie in
                         NavigationLink {
@@ -30,7 +51,7 @@ struct MoviesView: View {
             }
             .navigationTitle("Movies")
         }
-        .onAppear { viewModel.fetchpopularMovies() }
+        .onAppear { viewModel.fetchPopularMovies() }
     }
 }
 
@@ -40,7 +61,7 @@ struct MovieRow: View {
 
     var body: some View {
         HStack {
-                            AsyncImage(url: movie.posterURL) { image in
+            AsyncImage(url: movie.posterURL) { image in
                 image.resizable()
             } placeholder: {
                 Color.gray
