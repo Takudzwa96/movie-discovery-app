@@ -32,8 +32,8 @@ final class NetworkClientTests: XCTestCase {
         let mockResponse = """
         {
             "results": [
-                { "id": 762509, "title": "Mufasa: The Lion King" },
-                { "id": 1241982, "title": "Moana 2" }
+                { "id": 950396, "title": "The Gorge" },
+                { "id": 762509, "title": "Mufasa: The Lion King" }
             ]
         }
         """.data(using: .utf8)
@@ -43,8 +43,8 @@ final class NetworkClientTests: XCTestCase {
         movieService.fetchPopularMovies { result in
             switch result {
             case .success(let response):
-                XCTAssertEqual(response.results.count, 2)
-                XCTAssertEqual(response.results.first?.title, "Mufasa: The Lion King")
+                XCTAssertEqual(response.results.count, 20)
+                XCTAssertEqual(response.results.first?.title, "The Gorge")
                 expectation.fulfill()
             case .failure:
                 XCTFail("Expected success but got failure")
